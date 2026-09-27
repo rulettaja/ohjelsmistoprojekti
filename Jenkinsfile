@@ -34,14 +34,17 @@ pipeline {
 				archiveArtifacts artifacts: 'target/site/jacoco/**', fingerprint: true
 			}
 		}
+		
 		stage('Docker Check') {
 			steps {
-				bat 'docker --version'
-			}
+        bat '"C:\\Users\\rajal\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" --version'
+    }
+
+
 		}
 		stage('Docker Build') {
 			steps {
-				bat 'docker build -t YOUR_DOCKERHUB_USERNAME/myapp:latest .'
+				bat 'docker build -t rthless/myapp:latest .'
 			}
 		}
 	}
