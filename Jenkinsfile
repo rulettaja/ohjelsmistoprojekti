@@ -34,5 +34,15 @@ pipeline {
 				archiveArtifacts artifacts: 'target/site/jacoco/**', fingerprint: true
 			}
 		}
+		stage('Docker Check') {
+			steps {
+				bat 'docker --version'
+			}
+		}
+		stage('Docker Build') {
+			steps {
+				bat 'docker build -t YOUR_DOCKERHUB_USERNAME/myapp:latest .'
+			}
+		}
 	}
 }
