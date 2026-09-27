@@ -16,12 +16,12 @@ pipeline {
                  }
 		stage('Test') {
 			steps {
-				bat 'mvn -B test'
+				bat '"C:\\Tools\\Maven\\apache-maven-3.9.16\\bin\\mvn.cmd" -B test'
 			}
 		}
 		stage('Code Coverage') {
 			steps {
-				bat 'mvn -B jacoco:report'
+				bat '"C:\\Tools\\Maven\\apache-maven-3.9.16\\bin\\mvn.cmd" -B jacoco:report'
 			}
 		}
 		stage('Publish Test Results') {
