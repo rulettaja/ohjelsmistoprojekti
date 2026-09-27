@@ -44,7 +44,8 @@ pipeline {
 		}
 		stage('Docker Build') {
 			steps {
-				bat 'docker build -t rthless/myapp:latest .'
+				bat '"C:\\Users\\rajal\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" build -t rthless/myapp:latest .'
+
 			}
 		}
 	}
