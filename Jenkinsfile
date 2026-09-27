@@ -10,10 +10,10 @@ pipeline {
 			}
 		}
 		stage('Build') {
-			steps {
-				bat 'mvn -B -DskipTests clean install'
-			}
-		}
+            steps {
+                bat 'C:\\Tools\\Maven\\apache-maven-3.9.16\\bin\\mvn.cmd -B -DskipTests clean install'
+                 }
+                 }
 		stage('Test') {
 			steps {
 				bat 'mvn -B test'
