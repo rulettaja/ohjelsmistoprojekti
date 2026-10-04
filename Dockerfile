@@ -5,7 +5,7 @@ COPY pom.xml .
 COPY src ./src
 RUN mvn -B -DskipTests package
 
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:17-jre-jammy
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	libasound2 libgtk-3-0 libgl1 libx11-6 libxext6 libxrender1 libxtst6 libxi6 wget unzip \
 	&& rm -rf /var/lib/apt/lists/*
