@@ -10,7 +10,7 @@ pipeline {
                     if (isUnix()) {
                         sh 'mvn -B clean verify'
                     } else {
-                        bat 'mvn -B clean verify'
+                        bat '"C:\\Tools\\Maven\\apache-maven-3.9.16\\bin\\mvn.cmd" -B clean verify'
                     }
                 }
             }
