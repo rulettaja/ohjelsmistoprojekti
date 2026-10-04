@@ -35,7 +35,7 @@ pipeline {
                                 sh 'printf "%s" "$DOCKERHUB_TOKEN" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin'
                                 sh 'docker push "$IMAGE_NAME:latest"'
                             } else {
-                                powershell '$env:DOCKERHUB_TOKEN | & "C:\Users\rajal\AppData\Local\Programs\DockerDesktop\resources\bin\docker.exe" login --username $env:DOCKERHUB_USERNAME --password-stdin'
+                                powershell '$env:DOCKERHUB_TOKEN | & "C:\\Users\\rajal\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" login --username $env:DOCKERHUB_USERNAME --password-stdin'
                                 bat '"C:\\Users\\rajal\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" push %IMAGE_NAME%:latest'
                             }
                         } finally {
