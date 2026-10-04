@@ -21,7 +21,7 @@ pipeline {
                     if (isUnix()) {
                         sh 'docker build -t "$IMAGE_NAME:latest" .'
                     } else {
-                        bat 'docker build -t %IMAGE_NAME%:latest .'
+                        bat '"C:\\Users\\rajal\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" build -t %IMAGE_NAME%:latest .'
                     }
                 }
             }
@@ -35,14 +35,14 @@ pipeline {
                                 sh 'printf "%s" "$DOCKERHUB_TOKEN" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin'
                                 sh 'docker push "$IMAGE_NAME:latest"'
                             } else {
-                                powershell '$env:DOCKERHUB_TOKEN | docker login --username $env:DOCKERHUB_USERNAME --password-stdin'
-                                bat 'docker push %IMAGE_NAME%:latest'
+                                powershell '$env:DOCKERHUB_TOKEN | & "C:\Users\rajal\AppData\Local\Programs\DockerDesktop\resources\bin\docker.exe" login --username $env:DOCKERHUB_USERNAME --password-stdin'
+                                bat '"C:\\Users\\rajal\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" push %IMAGE_NAME%:latest'
                             }
                         } finally {
                             if (isUnix()) {
                                 sh 'docker logout'
                             } else {
-                                bat 'docker logout'
+                                bat '"C:\\Users\\rajal\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" logout'
                             }
                         }
                     }
