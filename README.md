@@ -5,7 +5,7 @@
 This individual assignment implements a temperature-conversion program. It converts values between Fahrenheit and Celsius and identifies whether a temperature, expressed in Celsius, is outside the configured normal range.
 
 Deliverables in this repository:
-- A JavaFX desktop interface for selecting a conversion direction, entering a value, and viewing the converted result and temperature-range message.
+- A JavaFX desktop interface with English, Finnish, Swedish, Japanese, and Arabic localization, conversion direction selection, temperature input, and a temperature-range message.
 - A command-line interface for performing either conversion.
 - Automated unit tests for conversion calculations, range boundaries, and command-line behavior.
 - A Maven build with JaCoCo test-coverage reporting.
@@ -45,7 +45,7 @@ The test suite covers:
 | Missing, unsupported, or non-numeric CLI arguments | Appropriate argument or number-format exception |
 | CLI output | Converted number is printed to standard output |
 
-The Jenkins pipeline runs `mvn -B clean verify`, publishes Surefire test results, and archives the JaCoCo report. To reproduce the automated checks locally, run `mvn clean verify` from the repository root.
+The Jenkins pipeline runs `mvn -B clean verify`, publishes Surefire test results, archives the JaCoCo report, builds the Docker image, and pushes both the `latest` and build-number tags. Configure the Jenkins credential ID `dockerhub-credentials` as a Docker Hub username and access token. Docker must be installed and available on the agent's `PATH`.
 
 ## 5. How to Run
 
@@ -66,6 +66,32 @@ mvn clean verify
 ### Run the desktop application
 
 Import the repository as a Maven project in an IDE, then run `TemperatureConverterApp` as the Java application entry point. Ensure the IDE uses JDK 17 or newer and resolves the Maven dependencies.
+
+Choose the interface language from the Language selector. The conversion selector independently chooses Fahrenheit-to-Celsius or Celsius-to-Fahrenheit.
+
+### Run the GUI container
+
+Start an X server on the host (for example, Xming on Windows) and allow local Docker connections in its access settings. Build and launch the image from the repository root:
+
+```sh
+docker build -t temperature-converter .
+docker run --rm -e DISPLAY=host.docker.internal:0.0 temperature-converter
+```
+
+The container expects an X server; a headless Docker host cannot display the JavaFX window.
+
+### Deploy with Minikube
+
+Start Minikube, build the image into its Docker daemon, then apply the included manifest:
+
+```sh
+minikube start
+minikube image build -t rthless/temperature-converter:latest .
+kubectl apply -f temperature-converter.yaml
+kubectl get pods -l app=temperature-converter
+```
+
+The manifest points the container at `host.docker.internal:0.0`, so an X server must be running and reachable from the Minikube node. X server networking differs by Minikube driver and host OS; adjust `DISPLAY` in the manifest if needed.
 
 ### Run the command-line converter
 

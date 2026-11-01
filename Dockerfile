@@ -7,7 +7,7 @@ RUN mvn -B -DskipTests package
 
 FROM eclipse-temurin:17-jre-jammy
 RUN apt-get update && apt-get install -y --no-install-recommends \
-	libasound2 libgtk-3-0 libgl1 libx11-6 libxext6 libxrender1 libxtst6 libxi6 wget unzip \
+	libasound2 libgtk-3-0 libgl1 libx11-6 libxext6 libxrender1 libxtst6 libxi6 fonts-noto-core fonts-noto-cjk wget unzip \
 	&& rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /javafx-sdk \
 	&& wget -qO /tmp/javafx.zip https://download2.gluonhq.com/openjfx/21/openjfx-21_linux-x64_bin-sdk.zip \
@@ -18,4 +18,4 @@ RUN mkdir -p /javafx-sdk \
 WORKDIR /app
 COPY --from=build /app/target/standalone-temperature-project-1.0-SNAPSHOT.jar app.jar
 ENV DISPLAY=host.docker.internal:0.0
-ENTRYPOINT ["java", "--module-path", "/javafx-sdk/lib", "--add-modules", "javafx.controls", "-jar", "app.jar"]
+ENTRYPOINT ["java", "--module-path", "/javafx-sdk/lib", "--add-modules", "javafx.controls,javafx.fxml", "-jar", "app.jar"]

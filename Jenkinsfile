@@ -19,9 +19,9 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                        sh 'docker build -t "$IMAGE_NAME:latest" .'
+                        sh 'docker build -t "$IMAGE_NAME:latest" -t "$IMAGE_NAME:$BUILD_NUMBER" .'
                     } else {
-                        bat '"C:\\Users\\rajal\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" build -t %IMAGE_NAME%:latest .'
+                        bat 'docker build -t %IMAGE_NAME%:latest -t %IMAGE_NAME%:%BUILD_NUMBER% .'
                     }
                 }
             }
@@ -34,15 +34,17 @@ pipeline {
                             if (isUnix()) {
                                 sh 'printf "%s" "$DOCKERHUB_TOKEN" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin'
                                 sh 'docker push "$IMAGE_NAME:latest"'
+                                sh 'docker push "$IMAGE_NAME:$BUILD_NUMBER"'
                             } else {
-                                powershell '$env:DOCKERHUB_TOKEN | & "C:\\Users\\rajal\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" login --username $env:DOCKERHUB_USERNAME --password-stdin'
-                                bat '"C:\\Users\\rajal\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" push %IMAGE_NAME%:latest'
+                                powershell '$env:DOCKERHUB_TOKEN | docker login --username $env:DOCKERHUB_USERNAME --password-stdin'
+                                bat 'docker push %IMAGE_NAME%:latest'
+                                bat 'docker push %IMAGE_NAME%:%BUILD_NUMBER%'
                             }
                         } finally {
                             if (isUnix()) {
                                 sh 'docker logout'
                             } else {
-                                bat '"C:\\Users\\rajal\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" logout'
+                                bat 'docker logout'
                             }
                         }
                     }
