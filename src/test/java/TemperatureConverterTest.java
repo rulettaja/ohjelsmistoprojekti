@@ -23,6 +23,19 @@ class TemperatureConverterTest {
     }
 
     @Test
+    void convertSupportsAllTemperatureUnits() {
+        assertEquals(0.0, converter.convert(32, "fahrenheit", "celsius"), 0.0001);
+        assertEquals(273.15, converter.convert(0, "celsius", "kelvin"), 0.0001);
+        assertEquals(32.0, converter.convert(273.15, "kelvin", "fahrenheit"), 0.0001);
+    }
+
+    @Test
+    void convertRejectsUnsupportedUnits() {
+        org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException.class,
+                () -> converter.convert(1, "mile", "celsius"));
+    }
+
+    @Test
     void isExtremeTemperature_edgeCases() {
         assertTrue(converter.isExtremeTemperature(-41));
         assertTrue(converter.isExtremeTemperature(51));

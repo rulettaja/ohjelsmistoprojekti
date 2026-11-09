@@ -16,9 +16,9 @@ public class TemperatureConverterApp extends Application {
             ResourceBundle.getBundle("messages", Locale.ENGLISH));
         Parent root = loader.load();
         stage.setTitle(ResourceBundle.getBundle("messages", Locale.ENGLISH).getString("app.title"));
-        stage.setScene(new Scene(root, 390, 390));
-        stage.setMinWidth(350);
-        stage.setMinHeight(360);
+        stage.setScene(new Scene(root, 420, 650));
+        stage.setMinWidth(360);
+        stage.setMinHeight(560);
         stage.show();
     }
 

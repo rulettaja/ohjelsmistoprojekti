@@ -21,3 +21,21 @@ spec:
           env:
             - name: DISPLAY
               value: host.docker.internal:0.0
+          volumeMounts:
+            - name: database-data
+              mountPath: /app/data
+      volumes:
+        - name: database-data
+          persistentVolumeClaim:
+            claimName: temperature-converter-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: temperature-converter-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
